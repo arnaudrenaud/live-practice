@@ -1,2 +1,3 @@
-const salut: string = "Bonjour";
-console.log(salut);
+import { getTemperatureForCity } from "./Weather";
+
+console.log(getTemperatureForCity("Lille"));
