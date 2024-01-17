@@ -4,7 +4,10 @@ const WEATHER_FOR_CITIES = [
   { city: "Reims", country: "France", temperatureCelsius: -4, weatherCode: 0 },
 ];
 
-export function getTemperatureForCity(city: string): number | undefined {
+export function getTemperatureForCity(city: string): number {
   const weather = WEATHER_FOR_CITIES.find((weather) => weather.city === city);
+  if (!weather) {
+    throw new Error(`No weather found for city ${city}.`);
+  }
   return weather?.temperatureCelsius;
 }
