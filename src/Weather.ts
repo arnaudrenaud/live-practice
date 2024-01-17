@@ -1,9 +1,4 @@
-type Weather = {
-  city: string;
-  country: string;
-  temperatureCelsius: number;
-  weatherCode: number;
-};
+import { Weather } from "./types";
 
 const WEATHER_FOR_CITIES: Weather[] = [
   { city: "Lille", country: "France", temperatureCelsius: -2, weatherCode: 2 },
