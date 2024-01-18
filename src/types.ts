@@ -6,3 +6,5 @@ export type Weather = {
   temperatureCelsius: number;
   weatherCode: keyof WeatherCodes;
 };
+
+export type TemperatureUnit = "CELSIUS" | "FAHRENHEIT";

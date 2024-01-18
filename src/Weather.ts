@@ -1,4 +1,4 @@
-import { Weather } from "./types";
+import { TemperatureUnit, Weather } from "./types";
 import { WEATHER_CODES } from "./weather-codes";
 
 const WEATHER_FOR_CITIES: Weather[] = [
@@ -15,10 +15,24 @@ export function getWeatherForCity(city: string): Weather {
   return weather;
 }
 
-export function printWeatherForCity(city: string): void {
+function getTemperatureFahrenheit(tempCelsius: number): number {
+  return (tempCelsius * 9) / 5 + 32;
+}
+
+export function printWeatherForCity(
+  city: string,
+  temperatureUnit: TemperatureUnit = "CELSIUS"
+): void {
   const weather = getWeatherForCity(city);
   const icon: string = WEATHER_CODES[weather.weatherCode].icon;
   const text: string = WEATHER_CODES[weather.weatherCode].text;
+
+  const temperature = Math.round(
+    temperatureUnit === "CELSIUS"
+      ? weather.temperatureCelsius
+      : getTemperatureFahrenheit(weather.temperatureCelsius)
+  );
+  const shortTemperatureUnit = temperatureUnit === "CELSIUS" ? "C" : "F";
 
   console.log(
     "┌" +
@@ -27,7 +41,9 @@ export function printWeatherForCity(city: string): void {
       ) +
       "┐"
   );
-  console.log("| City   | Country   | Temperature (°C) | Weather Description");
+  console.log(
+    `| City   | Country   | Temperature (°${shortTemperatureUnit}) | Weather Description`
+  );
   console.log(
     "|" +
       "-".repeat(
@@ -36,7 +52,7 @@ export function printWeatherForCity(city: string): void {
       "|"
   );
   console.log(
-    `| ${weather.city}  | ${weather.country}    | ${weather.temperatureCelsius}°C             | ${icon} ${text}`
+    `| ${weather.city}  | ${weather.country}    | ${temperature}°${shortTemperatureUnit}             | ${icon} ${text}`
   );
   console.log(
     "└" +
