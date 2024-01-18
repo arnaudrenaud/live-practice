@@ -1,3 +1,3 @@
-import { getWeatherForCity } from "./Weather";
+import { printWeatherForCity } from "./Weather";
 
-console.log(getWeatherForCity("Lille"));
+printWeatherForCity("Lille");
