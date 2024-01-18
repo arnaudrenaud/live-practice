@@ -6,7 +6,7 @@ async function main() {
   const server = express();
 
   server.get("/", (request, response) => {
-    return response.send("Hello world!");
+    return response.json({ message: "Hello world!" });
   });
 
   server.listen(PORT, () => {
