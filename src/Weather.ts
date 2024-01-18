@@ -1,13 +1,13 @@
-import { TemperatureUnit, Weather } from "./types";
+import { TemperatureUnit, WeatherAttributes } from "./types";
 import { WEATHER_CODES } from "./weather-codes";
 
-const WEATHER_FOR_CITIES: Weather[] = [
+const WEATHER_FOR_CITIES: WeatherAttributes[] = [
   { city: "Lille", country: "France", temperatureCelsius: -2, weatherCode: 2 },
   { city: "Paris", country: "France", temperatureCelsius: -1, weatherCode: 45 },
   { city: "Reims", country: "France", temperatureCelsius: -4, weatherCode: 0 },
 ];
 
-export function getWeatherForCity(city: string): Weather {
+export function getWeatherForCity(city: string): WeatherAttributes {
   const weather = WEATHER_FOR_CITIES.find((weather) => weather.city === city);
   if (!weather) {
     throw new Error(`No weather found for city ${city}.`);
@@ -61,4 +61,18 @@ export function printWeatherForCity(
       ) +
       "┘"
   );
+}
+
+export class Weather implements WeatherAttributes {
+  city: string;
+  country: string;
+  temperatureCelsius: number;
+  weatherCode: number;
+
+
+  constructor(city: string) {
+    this.city = // reprendre le code de getWeatherForCity
+  }
+
+  print() {}
 }

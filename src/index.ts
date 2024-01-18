@@ -1,4 +1,4 @@
-import { printWeatherForCity } from "./Weather";
+import { Weather, printWeatherForCity } from "./Weather";
 
-printWeatherForCity("Lille");
-printWeatherForCity("Lille", "FAHRENHEIT");
+const weatherForLille = new Weather("Lille");
+weatherForLille.print();

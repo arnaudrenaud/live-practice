@@ -1,6 +1,6 @@
 import { WeatherCodes } from "./weather-codes";
 
-export type Weather = {
+export type WeatherAttributes = {
   city: string;
   country: string;
   temperatureCelsius: number;
