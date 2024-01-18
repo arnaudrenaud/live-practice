@@ -33,7 +33,9 @@ export class Weather {
     const weatherResponse = await fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code`
     );
-    const weather = await weatherResponse.json();
+    const weather = (await weatherResponse.json()) as {
+      current: { temperature_2m: number; weather_code: number };
+    };
 
     this.temperatureCelsius = weather.current.temperature_2m;
     this.weatherCode = weather.current.weather_code;
