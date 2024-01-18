@@ -1,4 +1,9 @@
 import { Weather } from "./Weather";
 
-const weatherForLille = new Weather("Lille");
-weatherForLille.print();
+async function main() {
+  const weatherForLille = new Weather("Lille");
+  await weatherForLille.setCurrent();
+  weatherForLille.print();
+}
+
+main();

@@ -1,10 +1,14 @@
-import { TemperatureUnit, WeatherAttributes } from "./types";
+import {
+  CoordinatesForCity,
+  TemperatureUnit,
+  WeatherAttributes,
+} from "./types";
 import { WEATHER_CODES } from "./weather-codes";
 
-const WEATHER_FOR_CITIES: WeatherAttributes[] = [
-  { city: "Lille", country: "France", temperatureCelsius: -2, weatherCode: 2 },
-  { city: "Paris", country: "France", temperatureCelsius: -1, weatherCode: 45 },
-  { city: "Reims", country: "France", temperatureCelsius: -4, weatherCode: 0 },
+const COORDINATES_FOR_CITIES: CoordinatesForCity[] = [
+  { city: "Lille", latitude: 50.6365654, longitude: 3.0635282 },
+  { city: "Paris", latitude: 48.8534951, longitude: 2.3483915 },
+  { city: "Reims", latitude: 49.2577886, longitude: 4.031926 },
 ];
 
 function getTemperatureFahrenheit(tempCelsius: number): number {
@@ -13,26 +17,20 @@ function getTemperatureFahrenheit(tempCelsius: number): number {
 
 export class Weather implements WeatherAttributes {
   city: string;
-  country: string;
   temperatureCelsius: number;
   weatherCode: number;
 
   constructor(city: string) {
-    const { country, temperatureCelsius, weatherCode } =
-      Weather.getWeatherForCity(city);
-
     this.city = city;
-    this.country = country;
-    this.temperatureCelsius = temperatureCelsius;
-    this.weatherCode = weatherCode;
   }
 
-  private static getWeatherForCity(city: string): WeatherAttributes {
-    const weather = WEATHER_FOR_CITIES.find((weather) => weather.city === city);
-    if (!weather) {
-      throw new Error(`No weather found for city ${city}.`);
-    }
-    return weather;
+  async setCurrent() {
+    const weatherResponse = await fetch(
+      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code`
+    );
+    const weather = await weatherResponse.json();
+
+    // set this.temperatureCelsius, this.weatherCode
   }
 
   print(temperatureUnit: TemperatureUnit = "CELSIUS"): void {
@@ -55,7 +53,7 @@ export class Weather implements WeatherAttributes {
         "┐"
     );
     console.log(
-      `| City   | Country   | Temperature (°${shortTemperatureUnit}) | Weather Description`
+      `| City  | Temperature (°${shortTemperatureUnit}) | Weather Description`
     );
     console.log(
       "|" +
@@ -66,7 +64,7 @@ export class Weather implements WeatherAttributes {
         "|"
     );
     console.log(
-      `| ${this.city}  | ${this.country}    | ${temperature}°${shortTemperatureUnit}             | ${icon} ${text}`
+      `| ${this.city}   | ${temperature}°${shortTemperatureUnit}             | ${icon} ${text}`
     );
     console.log(
       "└" +
