@@ -1,8 +1,4 @@
-import {
-  CoordinatesForCity,
-  TemperatureUnit,
-  WeatherAttributes,
-} from "./types";
+import { CoordinatesForCity, TemperatureUnit } from "./types";
 import { WEATHER_CODES } from "./weather-codes";
 
 const COORDINATES_FOR_CITIES: CoordinatesForCity[] = [
@@ -15,25 +11,41 @@ function getTemperatureFahrenheit(tempCelsius: number): number {
   return (tempCelsius * 9) / 5 + 32;
 }
 
-export class Weather implements WeatherAttributes {
+export class Weather {
   city: string;
-  temperatureCelsius: number;
-  weatherCode: number;
+  temperatureCelsius?: number;
+  weatherCode?: number;
 
   constructor(city: string) {
     this.city = city;
   }
 
-  async setCurrent() {
+  async setCurrent(): Promise<void> {
+    const coordinates = COORDINATES_FOR_CITIES.find(
+      (_coordinates) => _coordinates.city === this.city
+    );
+    if (!coordinates) {
+      throw new Error(`No coordinates found for city ${this.city}.`);
+    }
+
+    const { latitude, longitude } = coordinates;
+
     const weatherResponse = await fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code`
     );
     const weather = await weatherResponse.json();
 
-    // set this.temperatureCelsius, this.weatherCode
+    this.temperatureCelsius = weather.current.temperature_2m;
+    this.weatherCode = weather.current.weather_code;
   }
 
   print(temperatureUnit: TemperatureUnit = "CELSIUS"): void {
+    if (!this.temperatureCelsius || !this.weatherCode) {
+      throw new Error(
+        `No weather data found for city ${this.city}: run \`setCurrent\` on Weather object.`
+      );
+    }
+
     const icon: string = WEATHER_CODES[this.weatherCode].icon;
     const text: string = WEATHER_CODES[this.weatherCode].text;
 
@@ -53,7 +65,7 @@ export class Weather implements WeatherAttributes {
         "┐"
     );
     console.log(
-      `| City  | Temperature (°${shortTemperatureUnit}) | Weather Description`
+      `| City   | Temperature (°${shortTemperatureUnit}) | Weather Description`
     );
     console.log(
       "|" +
