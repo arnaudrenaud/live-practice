@@ -1,9 +1,17 @@
 import { Weather } from "./Weather";
+import express from "express";
 
+const PORT = 3500;
 async function main() {
-  const weatherForLille = new Weather("Lille");
-  await weatherForLille.setCurrent();
-  weatherForLille.print();
+  const server = express();
+
+  server.get("/", (request, response) => {
+    return response.send("Hello world!");
+  });
+
+  server.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}.`);
+  });
 }
 
 main();
