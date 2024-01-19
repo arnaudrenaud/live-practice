@@ -3,6 +3,7 @@ import { Weather } from "./Weather";
 import express from "express";
 import { DataSource } from "typeorm";
 import { Place } from "./Place";
+import { searchPlaces } from "./controllers";
 
 const dataSource = new DataSource({
   type: "sqlite",
@@ -27,17 +28,7 @@ async function main() {
     return response.json(weather);
   });
 
-  server.get("/search/places", (request, response) => {
-    const { name } = request.query;
-    if (!name || Array.isArray(name)) {
-      return response.status(400).json({
-        error:
-          "You must supply a single query param `name` to search for locations.",
-      });
-    }
-    // TODO: implement behavior
-    return response.json({});
-  });
+  server.get("/search/places", searchPlaces);
 
   server.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}.`);
