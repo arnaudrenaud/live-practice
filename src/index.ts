@@ -27,6 +27,18 @@ async function main() {
     return response.json(weather);
   });
 
+  server.get("/search/places", (request, response) => {
+    const { name } = request.query;
+    if (!name || Array.isArray(name)) {
+      return response.status(400).json({
+        error:
+          "You must supply a single query param `name` to search for locations.",
+      });
+    }
+    // TODO: implement behavior
+    return response.json({});
+  });
+
   server.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}.`);
   });
