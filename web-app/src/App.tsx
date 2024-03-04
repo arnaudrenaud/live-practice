@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-import { PlaceWithWeather } from "./types";
+import { PlaceWithWeather, TemperatureUnit } from "./types";
 import { WeatherCard } from "./components/WeatherCard";
+import { TemperatureSwitch } from "./components/TemperatureSwitch";
 
 function App() {
+  const [temperatureUnit, setTemperatureUnit] = useState(
+    TemperatureUnit.CELSIUS
+  );
   const [placesWithWeather, setPlacesWithWeather] =
     useState<PlaceWithWeather[]>();
 
@@ -23,9 +27,17 @@ function App() {
         <div className="App-grid">
           {placesWithWeather &&
             placesWithWeather.map((place) => (
-              <WeatherCard {...place} key={place.name} />
+              <WeatherCard
+                {...place}
+                temperatureUnit={temperatureUnit}
+                key={place.name}
+              />
             ))}
         </div>
+        <TemperatureSwitch
+          unit={temperatureUnit}
+          setUnit={setTemperatureUnit}
+        />
       </header>
     </div>
   );

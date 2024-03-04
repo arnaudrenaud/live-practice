@@ -48,3 +48,10 @@
   padding: 20px;
   border: 1px solid;
 }
+
+.TemperatureSwitch {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 20px;
+}
