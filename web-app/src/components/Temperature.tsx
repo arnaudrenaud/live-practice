@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 function getShuffledArray<T>(array: T[]): T[] {
   for (var i = array.length - 1; i > 0; i--) {
@@ -66,3 +67,7 @@ export function Temperature({ value }: Props) {
     </div>
   );
 }
+
+Temperature.propTypes = {
+  value: PropTypes.number.isRequired,
+};
