@@ -1,12 +1,6 @@
-export type WeatherDescription = {
-  text: string;
-  icon: string;
-};
-
-export type WeatherCodes = {
-  [code: number]: WeatherDescription;
-};
 // type WeatherCodes = Record<number, { text: string; icon: string }>;
+
+import { WeatherCodes } from "./types";
 
 // TODO : define narrow type for weather code number
 

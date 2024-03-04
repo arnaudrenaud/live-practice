@@ -4,7 +4,7 @@ import express from "express";
 import { DataSource } from "typeorm";
 import { Place } from "./Place";
 import { searchPlaces } from "./controllers";
-import { WeatherDescription } from "./weather-codes";
+import { PlaceWithWeather } from "./types";
 
 const dataSource = new DataSource({
   type: "sqlite",
@@ -12,14 +12,6 @@ const dataSource = new DataSource({
   entities: [Place],
   synchronize: true,
 });
-
-type PlaceWithWeather = {
-  name: string;
-  weather: {
-    temperatureCelsius: number;
-    weatherDescription: WeatherDescription;
-  };
-};
 
 const PORT = 3500;
 async function main() {

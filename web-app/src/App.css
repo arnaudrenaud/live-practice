@@ -24,6 +24,12 @@
   color: white;
 }
 
+.App-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +41,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.WeatherCard {
+  width: 120px;
+  padding: 20px;
+  border: 1px solid;
 }
