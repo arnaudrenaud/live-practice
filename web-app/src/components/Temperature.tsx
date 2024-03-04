@@ -1,5 +1,19 @@
 import { useState } from "react";
 
+function getShuffledArray<T>(array: T[]): T[] {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+}
+
+// getShuffledArray([2, 5, 10]);
+// getShuffledArray(["aa", "b", "0"]);
+// getShuffledArray([{ a: 1 }, { a: "1" }]);
+
 function getTemperatureFahrenheit(tempCelsius: number): number {
   return (tempCelsius * 9) / 5 + 32;
 }
@@ -9,16 +23,18 @@ enum TemperatureUnit {
   FAHRENHEIT,
 }
 
-export function Temperature() {
-  const [unit, setUnit] = useState<TemperatureUnit>(TemperatureUnit.CELSIUS);
+type Props = {
+  value: number;
+};
 
-  const TEMPERATURE = 5;
+export function Temperature({ value }: Props) {
+  const [unit, setUnit] = useState(TemperatureUnit.CELSIUS);
 
   return (
     <div>
       {unit === TemperatureUnit.CELSIUS
-        ? TEMPERATURE
-        : getTemperatureFahrenheit(TEMPERATURE)}
+        ? value
+        : getTemperatureFahrenheit(value)}
       °{unit === TemperatureUnit.CELSIUS ? "C" : "F"}
       <fieldset>
         <legend>Unité d'affichage :</legend>
