@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Temperature />
+        <Temperature value={10} />
       </header>
     </div>
   );
