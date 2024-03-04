@@ -4,15 +4,17 @@ function getTemperatureFahrenheit(tempCelsius: number): number {
   return (tempCelsius * 9) / 5 + 32;
 }
 
+type TemperatureUnit = "CELSIUS" | "FAHRENHEIT";
+
 export function Temperature() {
-  const [isCelsius, setIsCelsius] = useState(true);
+  const [unit, setUnit] = useState<TemperatureUnit>("CELSIUS");
 
   const TEMPERATURE = 5;
 
   return (
     <div>
-      {isCelsius ? TEMPERATURE : getTemperatureFahrenheit(TEMPERATURE)}°
-      {isCelsius ? "C" : "F"}
+      {unit === "CELSIUS" ? TEMPERATURE : getTemperatureFahrenheit(TEMPERATURE)}
+      °{unit === "CELSIUS" ? "C" : "F"}
       <fieldset>
         <legend>Unité d'affichage :</legend>
         <label>
@@ -21,7 +23,7 @@ export function Temperature() {
             name="unit"
             value="celsius"
             onClick={() => {
-              setIsCelsius(true);
+              setUnit("CELSIUS");
             }}
             defaultChecked
           />
@@ -34,7 +36,7 @@ export function Temperature() {
             name="unit"
             value="fahrenheit"
             onClick={() => {
-              setIsCelsius(false);
+              setUnit("FAHRENHEIT");
             }}
           />
           Fahrenheit
