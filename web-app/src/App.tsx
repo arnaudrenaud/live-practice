@@ -4,6 +4,7 @@ import "./App.css";
 import { PlaceWithWeather, TemperatureUnit } from "./types";
 import { WeatherCard } from "./components/WeatherCard";
 import { TemperatureSwitch } from "./components/TemperatureSwitch";
+import { TemperatureUnitContext } from "./TemperatureUnitContext";
 
 function App() {
   const [temperatureUnit, setTemperatureUnit] = useState(
@@ -24,20 +25,17 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="App-grid">
-          {placesWithWeather &&
-            placesWithWeather.map((place) => (
-              <WeatherCard
-                {...place}
-                temperatureUnit={temperatureUnit}
-                key={place.name}
-              />
-            ))}
-        </div>
-        <TemperatureSwitch
-          unit={temperatureUnit}
-          setUnit={setTemperatureUnit}
-        />
+        <TemperatureUnitContext.Provider
+          value={{ unit: temperatureUnit, setUnit: setTemperatureUnit }}
+        >
+          <div className="App-grid">
+            {placesWithWeather &&
+              placesWithWeather.map((place) => (
+                <WeatherCard {...place} key={place.name} />
+              ))}
+          </div>
+          <TemperatureSwitch />
+        </TemperatureUnitContext.Provider>
       </header>
     </div>
   );

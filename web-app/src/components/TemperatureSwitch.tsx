@@ -1,13 +1,17 @@
 import { TemperatureUnit } from "../types";
 
 import "../App.css";
+import { useContext } from "react";
+import {
+  TemperatureUnitContext,
+  TemperatureUnitContextType,
+} from "../TemperatureUnitContext";
 
-type Props = {
-  unit: TemperatureUnit;
-  setUnit: (unit: TemperatureUnit) => void;
-};
+export function TemperatureSwitch() {
+  const { setUnit } = useContext(
+    TemperatureUnitContext
+  ) as TemperatureUnitContextType;
 
-export function TemperatureSwitch({ unit, setUnit }: Props) {
   return (
     <div className="TemperatureSwitch">
       <fieldset>
